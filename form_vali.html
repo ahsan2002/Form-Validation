@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>form validation</title>
+    <style>
+      body {
+        padding: 10px 50px;
+      }
+      .formdesign {
+        font-size: 20px;
+      }
+      .formdesign input {
+        width: 25%;
+        border: 4px solid skyblue;
+        border-radius: 15px;
+        padding: 5px 20px;
+        margin: 5px;
+      }
+      .formerror {
+        color: red;
+      }
+      .but{
+          border-radius: 8px;
+          width: 80px;
+          height: 40px;
+          font-size: 20px;
+          background-color: aquamarine;
+      }
+      .but:hover{
+          background-color:aqua ;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome to Form</h1>
+    <form action="/myaction.php" name="myform" onsubmit="return validateform()" method="post">
+      <div class="formdesign" id="name">
+        Name:<input type="text" required="required" name="fname" /><b><span class="formerror"
+          ></span></b>
+      </div>
+      <div class="formdesign" id="email">
+        Email:<input type="email" required="required" name="femail" /><b><span class="formerror"
+          ></span></b>
+      </div>
+      <div class="formdesign" id="phone">
+        Phone:<input type="text"  required="required" name="fphone" /><b><span class="formerror"
+          ></span></b>
+      </div>
+      <div class="formdesign" id="pass">
+        Password:<input type="password" required="required"  name="fpass" /><b><span class="formerror"
+          ></span></b>
+      </div>
+      <br>
+      <input type="submit" class="but">
+    </form>
+    <script>
+      function clearerror(){
+        errors=document.getElementsByClassName('formerror');
+        for (let item of errors) {
+          item.innerHTML="";
+        }
+      }
+        function seterror(id,error){
+            // sets error inside tag of id
+            element=document.getElementById(id);
+            element.getElementsByClassName('formerror')[0].innerHTML=error;
+        }
+        function validateform(){
+            var returnval=true;
+            clearerror();
+            //perform validation and if validation fails,so set the value of returnval false
+            var name=document.forms['myform']['fname'].value
+            if (name.length<5) {
+                seterror("name","*length of name is too short")
+                returnval=false;
+            }
+
+            var email=document.forms['myform']['femail'].value
+            if (email.length>15) {
+                seterror("email","*Email length is too long")
+                returnval=false;
+            }
+            var phone=document.forms['myform']['fphone'].value
+            if (phone.length!=12) {
+                seterror("phone","*Phone Number should be of 12 digits")
+                returnval=false;
+            }
+            var pass=document.forms['myform']['fpass'].value
+            if (pass.length<6) {
+                seterror("pass","*Password should be atleast 6 characters long")
+                returnval=false;
+            }
+            
+            return returnval;
+        }
+    </script>
+  </body>
+</html>
